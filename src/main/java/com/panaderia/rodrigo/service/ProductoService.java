@@ -20,12 +20,12 @@ public class ProductoService {
         productoRepository.save(producto);
     }
 
-    public Producto findById(int id){
+    public Producto findById(Long id){
         return productoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
     }
 
-    public void delete(int id){
+    public void delete(Long id){
         productoRepository.deleteById(id);
     }
 

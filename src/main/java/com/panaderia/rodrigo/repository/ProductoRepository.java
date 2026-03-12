@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductoRepository extends JpaRepository<Producto, Integer> {
+public interface ProductoRepository extends JpaRepository<Producto, Long> {
     // JPA ya te da findAll, save, findById, deleteById automáticamente
     List<Producto> findByNombre(String nombre);
 
