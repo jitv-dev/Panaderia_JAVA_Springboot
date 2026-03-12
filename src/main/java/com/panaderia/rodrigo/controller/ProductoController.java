@@ -21,7 +21,7 @@ public class ProductoController {
     public String listar(Model model){
         model.addAttribute("productos", productoService.findAll());
         // template/productos/lista.html
-        return "productos/listar";
+        return "productos/lista";
     }
 
     @GetMapping("/nuevo")
