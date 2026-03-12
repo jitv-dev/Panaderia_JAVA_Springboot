@@ -13,42 +13,18 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/productos", "/css/**", "/img/**").permitAll()
-                        .requestMatchers("/productos/nuevo", "/productos/").hasRole("ADMIN")
-                        .requestMatchers("/clientes/**").hasAnyRole("ADMIN", "EMPLEADO")
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/productos", true)
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
-                );
-
-        return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         UserDetails admin = User.builder()
                 .username("admin")
                 .password(passwordEncoder().encode("admin123"))
@@ -62,5 +38,51 @@ public class SecurityConfig {
                 .build();
 
         return new InMemoryUserDetailsManager(admin, empleado);
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        // Recursos públicos
+                        .requestMatchers("/", "/index", "/login", "/css/**", "/img/**", "/js/**").permitAll()
+                        // H2 console (solo desarrollo)
+                        .requestMatchers("/h2-console/**").permitAll()
+                        // Productos: ver es público, crear/editar/eliminar solo ADMIN
+                        .requestMatchers("/productos", "/api/productos").permitAll()
+                        .requestMatchers("/productos/nuevo", "/productos/guardar",
+                                "/productos/editar/**", "/productos/eliminar/**").hasRole("ADMIN")
+                        // Clientes: ADMIN y EMPLEADO
+                        .requestMatchers("/clientes/**").hasAnyRole("ADMIN", "EMPLEADO")
+                        // Pedidos: ADMIN y EMPLEADO
+                        .requestMatchers("/pedidos/**").hasAnyRole("ADMIN", "EMPLEADO")
+                        // API REST: GET público, el resto requiere autenticación
+                        .requestMatchers("/api/**").authenticated()
+                        // Lo demás requiere autenticación
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .permitAll()
+                )
+                // Necesario para acceder a la consola H2 en desarrollo
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**", "/api/**")
+                )
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin())
+                );
+
+        return http.build();
     }
 }
