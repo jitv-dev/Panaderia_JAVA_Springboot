@@ -14,25 +14,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/productos")
 
 public class ProductoController {
+
     @Autowired
     private ProductoService productoService;
 
     @GetMapping
-    public String listar(Model model){
+    public String listar(Model model) {
         model.addAttribute("productos", productoService.findAll());
-        // template/productos/lista.html
-        return "productos/lista";
+        return "productos/lista"; // template/producto/lista.html
     }
 
     @GetMapping("/nuevo")
-    public String formulario(Model model){
+    public String formulario(Model model) {
         model.addAttribute("producto", new Producto());
         return "productos/formulario";
     }
 
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Producto producto){
+    public String guardar(@ModelAttribute  Producto producto) {
         productoService.save(producto);
         return "redirect:/productos";
+
     }
 }
