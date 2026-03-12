@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login - Panadería Rodrigo</title>
 </head>
 <body>
+<h1>Iniciar Sesión</h1>
 
+<div th:if="${param.error}">
+    <p>Usuario o contraseña incorrectos</p>
+</div>
+<div th:if="${param.logout}">
+    <p>Sesión cerrada correctamente</p>
+</div>
+
+<form th:action="@{/login}" method="post">
+    <label>Usuario:</label>
+    <input type="text" name="username" required/>
+
+    <label>Contraseña:</label>
+    <input type="password" name="password" required/>
+
+    <button type="submit">Entrar</button>
+</form>
 </body>
 </html>
