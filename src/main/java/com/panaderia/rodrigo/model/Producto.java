@@ -1,7 +1,9 @@
 package com.panaderia.rodrigo.model;
 
+
 import jakarta.persistence.*;
 import lombok.*;
+import jakarta.persistence.Id;
 
 @Entity
 @Data

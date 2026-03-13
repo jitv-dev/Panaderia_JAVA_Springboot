@@ -8,27 +8,27 @@
     <!-- recordar vincular el CSS-->
 </head>
 <body>
-<h1>Productos de Panaderia Rodrigo</h1>
-<a thref="/productos/nuevo}"> + Agregar Nuevo Producto</a>
+ <h1>Productos de Panaderia Rodrigo</h1>
+    <a thref="/productos/nuevo}"> + Agregar Nuevo Producto</a>
 
-<table>
-    <thead>
-    <tr>
-        <th>Nombre</th>
-        <th>Categoria</th>
-        <th>Precio</th>
-        <th>Strock</th>
-    </tr>
-    <tbody>
-    <tr th:each="p: ${productos}">
-        <td th:text="${p.nombre}"></td>
-        <td th:text="${p.categoria}"></td>
-        <td th:text="${p.precio}"></td>
-        <td th:text="${p.strock}"></td>
-    </tr>
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Precio</th>
+            <th>Strock</th>
+        </tr>
+        <tbody>
+            <tr th:each="p: ${productos}">
+                <td th:text="${p.nombre}"></td>
+                <td th:text="${p.categoria}"></td>
+                <td th:text="${p.precio}"></td>
+                <td th:text="${p.strock}"></td>
+            </tr>
     </tbody>
-    </thead>
-</table>
+        </thead>
+    </table>
 
 </body>
 </html>

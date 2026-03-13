@@ -1,5 +1,6 @@
 package com.panaderia.rodrigo.loader;
 
+import com.panaderia.rodrigo.model.Cliente;
 import com.panaderia.rodrigo.model.Pedido;
 import com.panaderia.rodrigo.model.Producto;
 import com.panaderia.rodrigo.repository.ClienteRepository;

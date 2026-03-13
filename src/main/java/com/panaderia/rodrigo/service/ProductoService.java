@@ -12,28 +12,20 @@ public class ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
 
-    public List<Producto> findAll(){
+    public List<Producto> findAll() {
         return productoRepository.findAll();
     }
 
-    public void save(Producto producto){
+    public void save(Producto producto) {
         productoRepository.save(producto);
     }
 
-    public Producto findById(Long id){
+    public Producto findById(Long id) {
         return productoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         productoRepository.deleteById(id);
-    }
-
-    public List<Producto> findByNombre(String nombre){
-        return productoRepository.findByNombre(nombre);
-    }
-
-    public List<Producto> findByCategoria(String categoria){
-        return productoRepository.findByCategoria(categoria);
     }
 }
