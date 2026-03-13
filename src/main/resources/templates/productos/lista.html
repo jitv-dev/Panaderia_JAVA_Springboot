@@ -1,31 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Panaderia de Rodrigo - Productos</title>
-<!--    Vincular CSS-->
+
+    <!-- recordar vincular el CSS-->
 </head>
 <body>
-    <h1>Productos de Panaderia</h1>
-    <a th:href="@{/productos/nuevo}">+ Agregar Nuevo Producto</a>
+<h1>Productos de Panaderia Rodrigo</h1>
+<a thref="/productos/nuevo}"> + Agregar Nuevo Producto</a>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Categoria</th>
-                <th>Precio</th>
-                <th>Stock</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="p: ${productos}">
-                <td th:text="${p.nombre}"></td>
-                <td th:text="${p.categoria}"></td>
-                <td th:text="${p.precio}"></td>
-                <td th:text="${p.stock}"></td>
-            </tr>
-        </tbody>
-    </table>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Categoria</th>
+        <th>Precio</th>
+        <th>Strock</th>
+    </tr>
+    <tbody>
+    <tr th:each="p: ${productos}">
+        <td th:text="${p.nombre}"></td>
+        <td th:text="${p.categoria}"></td>
+        <td th:text="${p.precio}"></td>
+        <td th:text="${p.strock}"></td>
+    </tr>
+    </tbody>
+    </thead>
+</table>
+
 </body>
 </html>
